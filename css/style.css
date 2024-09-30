@@ -41,11 +41,6 @@ audio {
     display: none;
 }
 
-.container {
-    width: min(80ch, 100vw - var(--space-l-xl));
-    margin-inline: auto;
-}
-
 .footer {
     --min: 30ch;
 
@@ -55,58 +50,23 @@ audio {
     grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
     gap: var(--space-s-m);
 }
-.footer > * {
+
+.footer>* {
     font-size: var(--step--1);
-}
-.hero {
-    display: grid;
-    grid-template-areas: 'stack';
-}
-
-.hero-gradient {
-    grid-area: stack;
-    place-self: end;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        0deg,
-        var(--color-dark),
-        var(--color-dark-transparent)
-    );
-}
-
-.hero > picture {
-    place-self: center;
-    grid-area: stack;
-    width: 100%;
-    height: 100%;
-}
-
-.hero img {
-    width: 100%;
-    height: 40vh;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-}
-
-.hero-content {
-    grid-area: stack;
-    place-self: end;
-    padding: var(--space-m-l) 0;
-    color: var(--color-light);
 }
 
 @media (max-width: 30rem) {
     .lead {
         display: none;
     }
-    .hero > picture {
+
+    .hero>picture {
         max-height: 15vh;
     }
 }
 
 .game {
-    margin-top: var(--space-m-l);
+    margin: 0;
 }
 
 /* flex och space between ordnar layouten för speldata och knappen på desktop */
@@ -121,19 +81,10 @@ audio {
 }
 
 /* game-currency är en lista med list items */
-.item > h3 {
+.item>h3 {
     display: flex;
     justify-content: space-between;
     gap: var(--space-xs-s);
-}
-
-@media (max-width: 30rem) {
-    .game-hud {
-        flex-direction: column-reverse;
-    }
-    .game-controls {
-        place-self: center;
-    }
 }
 
 /* för spelelementet används #id som selektor för att skapa css reglerna */
@@ -171,7 +122,7 @@ audio {
     min-width: 16rem;
 }
 
-#msgbox > p {
+#msgbox>p {
     margin-bottom: var(--space-xs-s);
     padding: var(--space-xs-s);
 }
@@ -201,7 +152,6 @@ audio {
     justify-content: space-between;
     cursor: pointer;
     border: 1px solid var(--color-dark-transparent);
-    margin: var(--space-xs-s) 0;
     padding: var(--space-s-m) var(--space-xs-s);
 }
 
@@ -212,6 +162,7 @@ audio {
 .card p:not(.title) {
     text-align: end;
 }
+
 /* klassen används på kortets titel, font-weight: 600 gör fonten fetare, en normal
  * font vikt är oftast 400
  */
@@ -225,9 +176,11 @@ audio {
     0% {
         color: var(--color-dark);
     }
+
     50% {
         color: var(--color-dark-transparent);
     }
+
     100% {
         color: var(--color-dark);
     }
@@ -236,3 +189,32 @@ audio {
 .active {
     animation: flash 1s infinite;
 }
+
+.container {
+    margin: 0;
+    height: 100vh;
+    width: 100vw;
+    display: inline-block;
+}
+
+.buttonBackground {
+    margin: 0;
+    width: 67vw;
+    height: 100vh;
+    background-color: #00ff00;
+    float: left;
+}
+
+.upgradeBackground {
+    margin: 0;
+    height: 67vh;
+    background-color: #0000ff;
+}
+
+.game-controls {
+    position: absolute;
+    bottom: 0px;
+    margin-bottom: 50vh; /*ta bort hälften av höjden / bredden*/
+    margin-left: 33.5vw;
+}
+
