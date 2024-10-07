@@ -1,0 +1,1 @@
+Jag har fixat det mesta med layouten kanske perhaps idk, du får fixa så texten uppdaterar

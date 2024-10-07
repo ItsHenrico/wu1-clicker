@@ -19,7 +19,7 @@
 
     --space-2xl-3xl: clamp(4.5rem, calc(3.46rem + 5.22vw), 7.5rem);
 
-    --space-4xl-5xl: clamp(7.88rem, calc(7.14rem + 3.7vw), 10rem);
+    --space-4xl-5xl: 25rem;
 }
 
 body {
@@ -39,20 +39,6 @@ h1 {
 /* göm audio, används för att preloada ljudet */
 audio {
     display: none;
-}
-
-.footer {
-    --min: 30ch;
-
-    margin-top: auto;
-    padding: var(--space-l-xl) 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, var(--min)), 1fr));
-    gap: var(--space-s-m);
-}
-
-.footer>* {
-    font-size: var(--step--1);
 }
 
 @media (max-width: 30rem) {
@@ -76,8 +62,20 @@ audio {
 }
 
 .game-currency {
-    list-style: none;
+    margin-top: calc(50vh - var(--space-4xl-5xl)/2 - 7rem);
+    text-align: center;
+    margin-inline: auto;
     padding: 0;
+}
+
+#moneyText{
+    font-size: 3rem;
+    margin: 0;
+}
+
+#mpsText{
+    font-size: 1.5rem;
+    margin: 0;
 }
 
 /* game-currency är en lista med list items */
@@ -92,9 +90,7 @@ audio {
     width: var(--space-4xl-5xl);
     height: var(--space-4xl-5xl);
     font-size: var(--step-2);
-    background: url('../img/brett-meliti-RgkYMfFopIA-unsplash-removebg-preview.png');
-    background-size: cover;
-    background-position: center;
+    border-radius: 50%;
     border: 2px solid transparent;
     color: var(--color-light);
     text-transform: uppercase;
@@ -212,9 +208,10 @@ audio {
 }
 
 .game-controls {
+    width: var(--space-4xl-5xl);
+    height: var(--space-4xl-5xl);
     position: absolute;
     bottom: 0px;
-    margin-bottom: 50vh; /*ta bort hälften av höjden / bredden*/
-    margin-left: 33.5vw;
+    margin-bottom: calc(50vh - var(--space-4xl-5xl)/2);
+    margin-left: calc(33.5vw - var(--space-4xl-5xl)/2);
 }
-
