@@ -23,6 +23,7 @@
 }
 
 body {
+    overflow: hidden; 
     background-color: var(--color-light);
     color: var(--color-dark);
     font-family: sans-serif;
@@ -113,7 +114,7 @@ audio {
 */
 #msgbox {
     position: fixed;
-    right: 2vmin;
+    left: 2vmin;
     bottom: 2vmin;
     min-width: 16rem;
 }
@@ -148,11 +149,13 @@ audio {
     justify-content: space-between;
     cursor: pointer;
     border: 1px solid var(--color-dark-transparent);
-    padding: var(--space-s-m) var(--space-xs-s);
+    padding: var(--space-s-m);
 }
 
 .card:hover {
     background-color: var(--color-lighter);
+    font-size: 1.5rem;
+    padding: calc(var(--space-s-m)-((var(--step-0) - 1.5rem)/2)); /*FIXA SNÄLLA JAG VET INTE VAD SOM HÄNDER*/
 }
 
 .card p:not(.title) {
@@ -202,8 +205,9 @@ audio {
 }
 
 .upgradeBackground {
+    overflow: auto;
     margin: 0;
-    height: 67vh;
+    height: 100vh;
     background-color: #0000ff;
 }
 

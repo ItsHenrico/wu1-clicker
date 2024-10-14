@@ -11,7 +11,7 @@ const clickerButton = document.querySelector('#game-button');
 const moneyTracker = document.querySelector('#money');
 const mpsTracker = document.querySelector('#mps'); // money per second
 const mpcTracker = document.querySelector('#mpc'); // money per click
-const upgradesTracker = document.querySelector('#upgrades');
+//const upgradesTracker = document.querySelector('#upgrades');
 const upgradeList = document.querySelector('#upgradelist');
 const msgbox = document.querySelector('#msgbox');
 const audioAchievement = document.querySelector('#swoosh');
@@ -76,6 +76,21 @@ clickerButton.addEventListener(
         // håll koll på hur många gånger spelaren klickat
         numberOfClicks += 1;
         // console.log(clicker.score);
+        const NOC = document.createElement("p");
+        let x = event.pageX;
+        let y = event.pageY;
+
+        NOC.style.position = "fixed";
+        NOC.style.left = (x - 30 + (Math.random() * 20)) + "px";
+        NOC.style.top = (y - 30 + (Math.random() * 20)) + "px";
+
+        NOC.textContent = ("+" + moneyPerClick);
+
+        clickerButton.appendChild(NOC)
+
+        setTimeout(() => {
+            NOC.parentNode.removeChild(NOC);
+        }, 2000);
     },
     false
 );
@@ -92,13 +107,10 @@ clickerButton.addEventListener(
 function step(timestamp) {
     moneyTracker.textContent = Math.round(money);
     mpsTracker.textContent = moneyPerSecond;
-    mpcTracker.textContent = moneyPerClick;
-    upgradesTracker.textContent = acquiredUpgrades;
+    //mpcTracker.textContent = moneyPerClick;
+    //upgradesTracker.textContent = acquiredUpgrades;
 
-    if (timestamp >= last + 1000) {
-        money += moneyPerSecond;
-        last = timestamp;
-    }
+    money += (moneyPerSecond / 60);
 
     if (moneyPerSecond > 0 && !active) {
         mpsTracker.classList.add('active');
@@ -182,6 +194,32 @@ upgrades = [
         cost: 1000,
         amount: 100,
     },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+
 ];
 
 /* createCard är en funktion som tar ett upgrade objekt som parameter och skapar
@@ -209,23 +247,23 @@ function createCard(upgrade) {
     header.classList.add('title');
     const cost = document.createElement('p');
     if (upgrade.amount) {
-        header.textContent = `${upgrade.name}, +${upgrade.amount} per sekund.`;
+        header.textContent = `${upgrade.name}`;
     } else {
-        header.textContent = `${upgrade.name}, +${upgrade.clicks} per klick.`;
+        header.textContent = `${upgrade.name}`;
     }
-    cost.textContent = `Köp för ${upgrade.cost} benbitar.`;
+    cost.textContent = `${upgrade.cost}`;
 
     card.addEventListener('click', (e) => {
         if (money >= upgrade.cost) {
             acquiredUpgrades++;
             money -= upgrade.cost;
             upgrade.cost *= 1.5;
-            cost.textContent = 'Köp för ' + upgrade.cost + ' benbitar';
+            cost.textContent = upgrade.cost;
             moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
             moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
-            message('Grattis du har köpt en uppgradering!', 'success');
         } else {
             message('Du har inte råd.', 'warning');
+            
         }
     });
 
