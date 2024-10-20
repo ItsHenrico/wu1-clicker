@@ -8,6 +8,7 @@
  * Viktigt: queryselector ger oss ett html element eller flera om det finns.
  */
 const clickerButton = document.querySelector('#game-button');
+const clickerBackground = document.querySelector('.game-controls');
 const moneyTracker = document.querySelector('#money');
 const mpsTracker = document.querySelector('#mps'); // money per second
 const mpcTracker = document.querySelector('#mpc'); // money per click
@@ -76,21 +77,34 @@ clickerButton.addEventListener(
         // håll koll på hur många gånger spelaren klickat
         numberOfClicks += 1;
         // console.log(clicker.score);
-        const NOC = document.createElement("p");
+
+        clickerButton.classList.remove('sizeChangeButton');
+        clickerBackground.classList.remove('sizeChange');
+
+        void clickerButton.offsetWidth; //What is this and why does it make it work
+        void clickerBackground.offsetWidth;
+
+        clickerButton.classList.add('sizeChangeButton');
+        clickerBackground.classList.add('sizeChange');
+
+        const mpc = document.createElement("p");
         let x = event.pageX;
         let y = event.pageY;
 
-        NOC.style.position = "fixed";
-        NOC.style.left = (x - 30 + (Math.random() * 20)) + "px";
-        NOC.style.top = (y - 30 + (Math.random() * 20)) + "px";
+        mpc.style.position = "fixed";
+        mpc.style.left = (x - 30 + (Math.random() * 20)) + "px";
+        mpc.style.top = (y - 30 + (Math.random() * 20)) + "px";
+        mpc.style.opacity = 1;
 
-        NOC.textContent = ("+" + moneyPerClick);
+        mpc.textContent = ("+" + moneyPerClick);
 
-        clickerButton.appendChild(NOC)
+        clickerButton.appendChild(mpc)
 
-        setTimeout(() => {
-            NOC.parentNode.removeChild(NOC);
-        }, 2000);
+        setInterval(function () {
+            if (mpc.style.opacity > 0) {
+                mpc.style.opacity -= 0.1;
+            }
+        }, 200);
     },
     false
 );
@@ -104,8 +118,40 @@ clickerButton.addEventListener(
  * denna metod som uppdaterar webbsidans text och pengarna.
  * Sist i funktionen så kallar den på sig själv igen för att fortsätta uppdatera.
  */
+
+moneyTranslator = [
+    {
+        number: 1,
+        suffix: ""
+    },
+    {
+        number: 1000,
+        suffix: "k"
+    },
+    {
+        number: 10 ** 6,
+        suffix: "M"
+    },
+    {
+        number: 10 ** 9,
+        suffix: "B"
+    },
+    {
+        number: 10 ** 12,
+        suffix: "T"
+    },
+]
+
 function step(timestamp) {
-    moneyTracker.textContent = Math.round(money);
+    moneyTranslator.forEach(moneyTranslator => {
+        if (money >= moneyTranslator.number) {
+            moneyTracker.textContent = Math.floor((money / moneyTranslator.number) * 10) / 10 + moneyTranslator.suffix
+        }
+        if (money < 1000) {
+            moneyTracker.textContent = Math.floor(money);
+        }
+    })
+
     mpsTracker.textContent = moneyPerSecond;
     //mpcTracker.textContent = moneyPerClick;
     //upgradesTracker.textContent = acquiredUpgrades;
@@ -182,7 +228,7 @@ upgrades = [
     {
         name: 'Kvalitetsspade',
         cost: 50,
-        clicks: 2,
+        clicks: 0.5,
     },
     {
         name: 'Skottkärra',
@@ -219,7 +265,26 @@ upgrades = [
         cost: 1000,
         amount: 100,
     },
-
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
+    {
+        name: 'Grävmaskin',
+        cost: 1000,
+        amount: 100,
+    },
 ];
 
 /* createCard är en funktion som tar ett upgrade objekt som parameter och skapar
@@ -251,24 +316,44 @@ function createCard(upgrade) {
     } else {
         header.textContent = `${upgrade.name}`;
     }
-    cost.textContent = `${upgrade.cost}`;
+    moneyTranslator.forEach(moneyTranslator => {
+        if (upgrade.cost >= moneyTranslator.number) {
+            cost.textContent = Math.floor((upgrade.cost / moneyTranslator.number) * 10) / 10 + moneyTranslator.suffix;
+        }
+    })
 
-    card.addEventListener('click', (e) => {
+    card.addEventListener('click', () => {
         if (money >= upgrade.cost) {
             acquiredUpgrades++;
             money -= upgrade.cost;
             upgrade.cost *= 1.5;
-            cost.textContent = upgrade.cost;
+            moneyTranslator.forEach(moneyTranslator => {
+                if (upgrade.cost >= moneyTranslator.number) {
+                    cost.textContent = Math.floor((upgrade.cost / moneyTranslator.number) * 10) / 10 + moneyTranslator.suffix;
+                }
+                if (upgrade.cost < 1000) {
+                    cost.textContent = Math.floor(upgrade.cost);
+                }
+            })
+
+            card.classList.add('boughtSuccess');
+            setTimeout(() => {
+                card.classList.remove('boughtSuccess')
+            }, 1000)
+
             moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
             moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
         } else {
-            message('Du har inte råd.', 'warning');
-            
+            card.classList.add('boughtFail');
+            setTimeout(() => {
+                card.classList.remove('boughtFail')
+            }, 1000)
         }
     });
 
     card.appendChild(header);
     card.appendChild(cost);
+
     return card;
 }
 
