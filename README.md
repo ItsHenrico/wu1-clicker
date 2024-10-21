@@ -58,3 +58,11 @@ Se classroom.
 GLHF!
 
 Tack [Malte](https://github.com/Mafrans) för lite ideér.
+
+ {
+        title: 'CLICKER',
+        tagline: 'Man klickar på cirkel, nummer blir större',
+        url: '[LÄNK TILL GITHUB PAGES](https://itshenrico.github.io/wu1-clicker/)',
+        git: '[LÄNK TILL REPO](https://github.com/ItsHenrico/wu1-clicker)',
+        author: 'Henrik Forsberg'
+    },
