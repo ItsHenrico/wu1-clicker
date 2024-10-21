@@ -92,28 +92,26 @@ audio {
     height: var(--space-4xl-5xl);
     font-size: var(--step-2);
     border-radius: 50%;
-    border: 2px solid transparent;
+    border: 5px solid transparent;
+    border-color: #000000;
     color: var(--color-light);
     text-transform: uppercase;
     font-weight: 700;
     cursor: pointer;
+    background-color: #ffffff;
 }
 
 #game-button:hover {
-    border-color: var(--color-dark-transparent);
-}
-
-#game-button:active {
-    border-color: var(--color-dark);
-    background-color: var(--color-dark-transparent);
+    border: 7px solid transparent;
+    border-color: #000000;
 }
 
 .sizeChangeButton{
-    animation: sizeChangeButton 0.5s;
+    animation: sizeChangeButton 0.5s !important;
 }
 
 .sizeChange{
-    animation: sizeChange 0.5s;
+    animation: sizeChange 0.5s !important;
 }
 
 @keyframes sizeChangeButton {
@@ -122,9 +120,14 @@ audio {
         height: calc(1 * var(--space-4xl-5xl));
     }
 
-    50% {
-        width: calc(0.95 * var(--space-4xl-5xl));
-        height: calc(0.95 * var(--space-4xl-5xl));
+    40% {
+        width: calc(0.96 * var(--space-4xl-5xl));
+        height: calc(0.96 * var(--space-4xl-5xl));
+    }
+
+    90% {
+        width: calc(1.01 * var(--space-4xl-5xl));
+        height: calc(1.01 * var(--space-4xl-5xl));
     }
 
     100% {
@@ -141,11 +144,18 @@ audio {
         margin-left: calc(33.5vw - calc(1 * var(--space-4xl-5xl))/2);
     }
 
-    50% {
-        width: calc(0.95 * var(--space-4xl-5xl));
-        height: calc(0.95 * var(--space-4xl-5xl));
-        margin-bottom: calc(50vh - calc(0.95 * var(--space-4xl-5xl))/2);
-        margin-left: calc(33.5vw - calc(0.95 * var(--space-4xl-5xl))/2);
+    40% {
+        width: calc(0.96 * var(--space-4xl-5xl));
+        height: calc(0.96 * var(--space-4xl-5xl));
+        margin-bottom: calc(50vh - calc(0.96 * var(--space-4xl-5xl))/2);
+        margin-left: calc(33.5vw - calc(0.96 * var(--space-4xl-5xl))/2);
+    }
+
+    90% {
+        width: calc(1.01 * var(--space-4xl-5xl));
+        height: calc(1.01 * var(--space-4xl-5xl));
+        margin-bottom: calc(50vh - calc(1.01 * var(--space-4xl-5xl))/2);
+        margin-left: calc(33.5vw - calc(1.01 * var(--space-4xl-5xl))/2);
     }
 
     100% {
@@ -196,7 +206,8 @@ audio {
     display: flex;
     justify-content: space-between;
     cursor: pointer;
-    border: 1px solid var(--color-dark-transparent);
+    border: 2.5px solid #000000;
+    border-inline: 5px solid #000000;
     padding: var(--space-s-m);
 }
 
@@ -262,7 +273,7 @@ audio {
     margin: 0;
     width: 67vw;
     height: 100vh;
-    background-color: #00ff00;
+    background-color: #ffffff;
     float: left;
 }
 
@@ -270,7 +281,7 @@ audio {
     overflow: auto;
     margin: 0;
     height: 100vh;
-    background-color: #0000ff;
+    background-color: #ffffff;
 }
 
 .game-controls {

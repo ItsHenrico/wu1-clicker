@@ -7,18 +7,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/reset.css">
     <link rel="stylesheet" href="css/style.css">
-    <title>Fossiljägaren - Clicker exempel</title>
+    <title>Clicker Spel</title>
 </head>
 
 <body>
     <audio id="swoosh" src="audio/607251__d4xx__swoosh-2.wav"></audio>
+    <audio id="click" src="audio/click.ogg"></audio>
+    <audio id="upgradeSuccess" src="audio/click.ogg"></audio>
+    <audio id="upgradeFail" src="audio/wrong.mp3"></audio>
     <main class="container">
         <div class="buttonBackground">
             <article class="game">
                 <div class="game-currency">
-                    <h3 id="moneyText"><span id="money"></span> Benbitar</h3>
+                    <h3 id="moneyText"><span id="money"></span></h3>
                     <!--h3>Benbitar per klick: <span id="mpc"></span></h3-->
-                    <h3 id="mpsText"><span id="mps"></span> Benbitar/s</h3>
+                    <h3 id="mpsText"><span id="mps"></span> per second</h3>
                     <!--h3>Uppgraderingar: <span id="upgrades"></span></h3-->
                 </div>
                 <div class="game-controls">

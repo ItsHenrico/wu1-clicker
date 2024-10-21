@@ -16,6 +16,9 @@ const mpcTracker = document.querySelector('#mpc'); // money per click
 const upgradeList = document.querySelector('#upgradelist');
 const msgbox = document.querySelector('#msgbox');
 const audioAchievement = document.querySelector('#swoosh');
+const audioUpgradeSuccess = document.querySelector('#upgradeSuccess');
+const audioUpgradeFail = document.querySelector('#upgradeFail');
+const audioClick = document.querySelector('#click');
 
 /* Följande variabler använder vi för att hålla reda på hur mycket pengar som
  * spelaren, har och tjänar.
@@ -38,22 +41,22 @@ let active = false; // exempel för att visa att du kan lägga till klass för a
 
 let achievements = [
     {
-        description: 'Museet är redo att öppna, grattis! ',
+        description: 'Wow, du uppgraderade',
         requiredUpgrades: 1,
         acquired: false,
     },
     {
-        description: 'Nu börjar det likna något, fortsätt gräva!',
+        description: 'Wow, du uppgraderade mer',
         requiredUpgrades: 10,
         acquired: false,
     },
     {
-        description: 'Klickare, med licens att klicka!',
+        description: 'No way du klickar',
         requiredClicks: 10,
         acquired: false,
     },
     {
-        description: 'Tac-2 god!',
+        description: 'Varför spelar du fortfarande?',
         requiredClicks: 10000,
         acquired: false,
     },
@@ -72,6 +75,7 @@ let achievements = [
 clickerButton.addEventListener(
     'click',
     () => {
+        audioClick.cloneNode().play();
         // vid click öka score med moneyPerClick
         money += moneyPerClick;
         // håll koll på hur många gånger spelaren klickat
@@ -81,7 +85,7 @@ clickerButton.addEventListener(
         clickerButton.classList.remove('sizeChangeButton');
         clickerBackground.classList.remove('sizeChange');
 
-        void clickerButton.offsetWidth; //What is this and why does it make it work
+        void clickerButton.offsetWidth;
         void clickerBackground.offsetWidth;
 
         clickerButton.classList.add('sizeChangeButton');
@@ -95,6 +99,7 @@ clickerButton.addEventListener(
         mpc.style.left = (x - 30 + (Math.random() * 20)) + "px";
         mpc.style.top = (y - 30 + (Math.random() * 20)) + "px";
         mpc.style.opacity = 1;
+        mpc.style.color = "#000000";
 
         mpc.textContent = ("+" + moneyPerClick);
 
@@ -103,6 +108,8 @@ clickerButton.addEventListener(
         setInterval(function () {
             if (mpc.style.opacity > 0) {
                 mpc.style.opacity -= 0.1;
+            } else{
+                mpc.remove(mpc)
             }
         }, 200);
     },
@@ -152,7 +159,15 @@ function step(timestamp) {
         }
     })
 
-    mpsTracker.textContent = moneyPerSecond;
+    moneyTranslator.forEach(moneyTranslator => {
+        if (moneyPerSecond >= moneyTranslator.number) {
+            mpsTracker.textContent = Math.floor((moneyPerSecond / moneyTranslator.number) * 10) / 10 + moneyTranslator.suffix
+        }
+        if (moneyPerSecond < 1000) {
+            mpsTracker.textContent = Math.floor(moneyPerSecond);
+        }
+    })
+
     //mpcTracker.textContent = moneyPerClick;
     //upgradesTracker.textContent = acquiredUpgrades;
 
@@ -221,69 +236,69 @@ window.addEventListener('load', (event) => {
  */
 upgrades = [
     {
-        name: 'Sop',
+        name: '+1',
         cost: 10,
         amount: 1,
     },
     {
-        name: 'Kvalitetsspade',
+        name: '+0.5 per click',
         cost: 50,
         clicks: 0.5,
     },
     {
-        name: 'Skottkärra',
+        name: '+10',
         cost: 100,
         amount: 10,
     },
     {
-        name: 'Grävmaskin',
+        name: '+100',
         cost: 1000,
         amount: 100,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+1k',
+        cost: 10000,
+        amount: 1000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+10k',
+        cost: 100000,
+        amount: 10000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+1 per click',
+        cost: 5000,
+        clicks: 1,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+100k',
+        cost: 1000000,
+        amount: 100000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+1M',
+        cost: 10000000,
+        amount: 1000000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+10M',
+        cost: 100000000,
+        amount: 10000000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+100M',
+        cost: 1000000000,
+        amount: 100000000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+1B',
+        cost: 10000000000,
+        amount: 1000000000,
     },
     {
-        name: 'Grävmaskin',
-        cost: 1000,
-        amount: 100,
+        name: '+2 per click',
+        cost: 50000,
+        clicks: 2,
     },
 ];
 
@@ -324,6 +339,7 @@ function createCard(upgrade) {
 
     card.addEventListener('click', () => {
         if (money >= upgrade.cost) {
+            audioUpgradeSuccess.cloneNode().play();
             acquiredUpgrades++;
             money -= upgrade.cost;
             upgrade.cost *= 1.5;
@@ -344,6 +360,7 @@ function createCard(upgrade) {
             moneyPerSecond += upgrade.amount ? upgrade.amount : 0;
             moneyPerClick += upgrade.clicks ? upgrade.clicks : 0;
         } else {
+            audioUpgradeFail.cloneNode().play();
             card.classList.add('boughtFail');
             setTimeout(() => {
                 card.classList.remove('boughtFail')
